@@ -1,12 +1,14 @@
-from django.shortcuts import get_object_or_404, get_list_or_404, render
-from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
-# from django.contrib.auth.views import login as login_view, logout as logout_view
 from django.contrib.auth.views import logout as logout_view
 from django.contrib.auth.decorators import login_required
-
 from django.contrib.auth.models import User
+from django.db.models import Q
+from django.forms import ValidationError
+from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import get_object_or_404, get_list_or_404, render
+from django.utils.translation import ugettext as _
+
 from .forms import ProfileForm, RegisterForm, LoginForm
 
 
@@ -21,26 +23,28 @@ def custom_login(request):
 
         if form.is_valid():
 
-            # try to get with email first (user may submit username or email)
-            try:
-                user = User.objects.get(email=form.cleaned_data['username_email'])
-            except User.DoesNotExist:
-                pass
+            # get the user by email or username
+            username = User.objects.get(
+                Q(username=form.cleaned_data['username_email']) |
+                Q(email=form.cleaned_data['username_email'])
+            ).username
 
-            if user is not None:
-                username = user.email
-            else:
-                username = form.cleaned_data['username']
-
-            # login after creation
+            # pass the username and password to authenticate() to login
             user = authenticate(
                 username = username,
                 password = form.cleaned_data['password'],
             )
-            login(request, user)
+            if user is not None:
+                # authentication successful
+                login(request, user)
 
-            # redirect
-            return HttpResponseRedirect(reverse('accounts:profile'))
+                # redirect to profile
+                return HttpResponseRedirect(reverse('accounts:profile'))
+            else:
+                # authentication failed, add error to form
+                form.add_error(None, ValidationError(
+                    'Invalid Username or Email and Password combination.',
+                ))
 
     else:
         form = LoginForm()

@@ -2,31 +2,45 @@
 
 {% block content %}
 
-{% for error in form.non_field_errors %}
-  <div class='alert alert-danger'>{{ error }}</div>
-{% endfor %}
-
 <form id='loginForm' method="post" class="form-signin" action="{% url 'accounts:login' %}">
 
 <h2 class="form-signin-heading">Login</h2>
 
   {% csrf_token %}
 
-  <p>
-    {% for error in form.username.errors %}
-      <div class='alert alert-danger'>{{ error }}</div>
-    {% endfor %}
-    <label for='id_username_email' class="sr-only">Username:</label>
-    {{ form.username_email }}
-  </p>
+  {% for error in form.non_field_errors %}
+    <div class='alert alert-danger form-error'>{{ error }}</div>
+  {% endfor %}
 
-  <p>
-    {% for error in form.password.errors %}
-      <div class='alert alert-danger'>{{ error }}</div>
-    {% endfor %}
-    <label for='{{ form.password.id }}' class="sr-only">Password:</label>
-    {{ form.password }}
-  </p>
+  <label for='{{ form.username_email.id_for_label }}'class="sr-only">Username:</label>
+  {{ form.username_email }}
+  {% if form.username_email.errors %}
+    <div class='alert alert-danger form-error'>
+      <ul>
+        {% for error in form.username_email.errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <script>
+      document.getElementById('{{ form.username_email.id_for_label }}').focus()
+    </script>
+  {% endif %}
+
+  <label for='{{ form.password.id_for_label }}' class="sr-only">Password:</label>
+  {{ form.password }}
+  {% if form.password.errors %}
+    <div class='alert alert-danger form-error'>
+      <ul>
+        {% for error in form.password.errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <script>
+      document.getElementById('{{ form.password.id_for_label }}').focus()
+    </script>
+  {% endif %}
 
   <input type="hidden" name="next" value="{{ next }}">
   <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>

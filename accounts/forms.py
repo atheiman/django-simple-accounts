@@ -2,6 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 
 
@@ -37,6 +38,7 @@ class LoginForm(forms.Form):
             attrs={
                 'class': 'form-control',
                 'placeholder': 'Username or Email',
+                'autofocus': 'autofocus',
             },
         ),
         error_messages={'required': 'Please enter your username or email', 'invalid': 'Please enter your username or email'},
@@ -48,6 +50,19 @@ class LoginForm(forms.Form):
                 'placeholder': 'Password',
             },
     )
+
+    def clean(self):
+        # try to get with email first (user may submit username or email)
+        try:
+            user = User.objects.get(
+                Q(username=self.cleaned_data.get('username_email')) |
+                Q(email=self.cleaned_data.get('username_email'))
+            )
+        except User.DoesNotExist:
+            raise forms.ValidationError(
+                "No username or email found matching %s." % self.cleaned_data.get('username_email')
+            )
+        return self.cleaned_data
 
 
 
