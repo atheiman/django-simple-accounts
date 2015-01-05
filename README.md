@@ -35,9 +35,7 @@ An explanation of each key availble to be set is described below:
 #### Example: `'my_app.models.UserProfile'`
 
 Dotted python path to a subclass of `django.db.models.Model` that you have defined as a User Profile model as described in the [Django docs](https://docs.djangoproject.com/en/1.7/topics/auth/customizing/#extending-the-existing-user-model). This setting allows:
-
 - an instance of the UserProfile model is created when a new User is created
-
 - the profile view includes fields for the UserProfile model
 
 #### Notes:
