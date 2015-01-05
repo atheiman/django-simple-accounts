@@ -30,14 +30,16 @@ DJANGO_SIMPLE_ACCOUNTS = {
 
 An explanation of each key availble to be set is described below:
 
-#### `USER_PROFILE_PYTHON_PATH`
+### `USER_PROFILE_PYTHON_PATH`
 
-###### Example: `'my_app.models.UserProfile'`
+#### Example: `'my_app.models.UserProfile'`
 Dotted python path to a subclass of `django.db.models.Model` that you have defined as a User Profile model as described in the [Django docs](https://docs.djangoproject.com/en/1.7/topics/auth/customizing/#extending-the-existing-user-model). This setting allows:
+
 - an instance of the UserProfile model is created when a new User is created
 - the profile view includes fields for the UserProfile model
 
-##### Notes:
+#### Notes:
+
 - Be sure to set [Field.default](https://docs.djangoproject.com/en/1.7/ref/models/fields/#default) or [Field.blank](https://docs.djangoproject.com/en/1.7/ref/models/fields/#blank) and [Field.null](https://docs.djangoproject.com/en/1.7/ref/models/fields/#null) for all of your UserProfile model fields, because when the UserProfile instance is first created no fields will be set. Those fields are set from the profile view (after registration).
 
 
