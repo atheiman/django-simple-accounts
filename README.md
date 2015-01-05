@@ -48,9 +48,12 @@ Dotted python path to a subclass of `django.db.models.Model` that you have defin
 
 ## Features to be added
 
-- User Profile Model management
+[ ] User Profile Model management
 
-- Login with Google or Facebook
+[ ] Login with Google or Facebook
 
-- Register
+[ ] Register
 
+[ ] Email registration confirmation link
+
+[ ] Enable disable settings with django settings
