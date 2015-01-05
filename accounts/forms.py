@@ -50,6 +50,9 @@ class LoginForm(forms.Form):
                 'placeholder': 'Password',
             },
     )
+    next = forms.CharField(
+        widget=forms.HiddenInput,
+    )
 
     def clean(self):
         # try to get with email first (user may submit username or email)
@@ -60,7 +63,7 @@ class LoginForm(forms.Form):
             )
         except User.DoesNotExist:
             raise forms.ValidationError(
-                "No username or email found matching %s." % self.cleaned_data.get('username_email')
+                "No username or email found matching \"%s\"." % self.cleaned_data.get('username_email')
             )
         return self.cleaned_data
 

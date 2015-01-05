@@ -13,9 +13,16 @@ from .forms import ProfileForm, RegisterForm, LoginForm
 
 
 
+context_base = {}
+
+
+
 def custom_login(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect(reverse('accounts:profile'))
+
+    context = context_base
+
     if request.method == 'POST':
 
         # create a form instance and populate it with data from the request
@@ -38,18 +45,22 @@ def custom_login(request):
                 # authentication successful
                 login(request, user)
 
-                # redirect to profile
-                return HttpResponseRedirect(reverse('accounts:profile'))
+                # redirect to next url
+                return HttpResponseRedirect(form.cleaned_data['next'])
             else:
                 # authentication failed, add error to form
                 form.add_error(None, ValidationError(
-                    'Invalid Username or Email and Password combination.',
+                    'Invalid Password.',
                 ))
 
     else:
         form = LoginForm()
 
-    return render(request, 'accounts/login.html', {'form': form})
+    context['form'] = form
+    # next url after login is stored in GET param. default to profile
+    context['next'] = request.GET.get('next', reverse('accounts:profile'))
+
+    return render(request, 'accounts/login.html', context)
 
 
 

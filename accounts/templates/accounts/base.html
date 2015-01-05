@@ -38,10 +38,13 @@
 
         {% endblock content %}
 
-    </div> <!-- /container -->
+    </div>
 
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="{% static 'accounts/ie10-viewport-bug-workaround.js' %}"></script>
+
+    {% block bottomscript %}
+    {% endblock bottomscript %}
     </body>
 </html>
