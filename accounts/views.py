@@ -10,6 +10,7 @@ from django.shortcuts import get_object_or_404, get_list_or_404, render
 from django.utils.translation import ugettext as _
 
 from .forms import ProfileForm, RegisterForm, LoginForm
+from .models import UserProfile
 
 
 
@@ -50,13 +51,14 @@ def custom_login(request):
             else:
                 # authentication failed, add error to form
                 form.add_error(None, ValidationError(
-                    'Invalid Password.',
+                    _('Invalid Password.'),
                 ))
 
     else:
         form = LoginForm()
 
     context['form'] = form
+
     # next url after login is stored in GET param. default to profile
     context['next'] = request.GET.get('next', reverse('accounts:profile'))
 
