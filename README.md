@@ -82,13 +82,13 @@ Don't get bogged down managing Users, focus on writing your application!
 
     The following URLs / views are also implemented for use:
 
-        - [/accounts/register/](http://localhost:8000/accounts/register/)
+    - [/accounts/register/](http://localhost:8000/accounts/register/)
 
-        - [/accounts/login/](http://localhost:8000/accounts/login/)
+    - [/accounts/login/](http://localhost:8000/accounts/login/)
 
-        - [/accounts/profile/](http://localhost:8000/accounts/profile/)
+    - [/accounts/profile/](http://localhost:8000/accounts/profile/)
 
-        - [/accounts/logout/](http://localhost:8000/accounts/logout/)
+    - [/accounts/logout/](http://localhost:8000/accounts/logout/)
 
 
 
