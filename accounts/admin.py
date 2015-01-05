@@ -10,7 +10,7 @@ try:
     class UserProfileInline(admin.StackedInline):
         model = UserProfile
         can_delete = False
-        verbose_name_plural = Profile
+        verbose_name_plural = "Profile"
 
     # unregister the default User admin
     admin.site.unregister(User)

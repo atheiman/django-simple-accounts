@@ -12,13 +12,91 @@ Don't get bogged down managing Users, focus on writing your application!
 
 
 
+## Start using django-simple-accounts
+
+1.  Install django-simple-accounts from GitHub using pip:
+
+    `pip install git+ssh://git@github.com/atheiman/django-simple-accounts.git@master`
+
+1.  Add the Django app `accounts` to `INSTALLED_APPS` in your settings file:
+
+    ```python
+    # settings.py
+
+    INSTALLED_APPS = (
+       # ...
+       'accounts',
+    )
+    ```
+
+1.  Include the django-simple-accounts urls in your `ROOT_URLCONF`:
+
+    ```python
+    # urls.py
+
+    urlpatterns = patterns('',
+        # ...
+        url(r'^accounts/', include('accounts.urls', namespace='accounts')),
+    )
+    ```
+
+1.  Create your UserProfile model if desired:
+
+    ```python
+    # models.py
+
+    class UserProfile(models.Model):
+        user = models.OneToOneField(User)
+        phone = models.CharField(
+            max_length=12,
+            blank=True,
+        )
+        # more model fields as needed
+
+        def __unicode__(self):
+            return self.user.username
+    ```
+
+1.  Configure django-simple-accounts in your settings:
+
+    ```python
+    # settings.py
+
+    DJANGO_SIMPLE_ACCOUNTS = {
+        # python
+        'USER_PROFILE_PYTHON_PATH': 'my_app.models.UserProfile',
+    }
+    ```
+
+    Configuration is described completely below.
+
+1.  Run the app and check it out:
+
+    ```shell
+    $ python manage.py makemigrations
+    $ python manage.py migrate
+    $ python manage.py runserver
+    ```
+
+    You should see Profiles as a [StackedInline](https://docs.djangoproject.com/en/1.7/ref/contrib/admin/#django.contrib.admin.StackedInline) included in your admin site at [/admin/auth/user/](http://localhost:8000/admin/auth/user/).
+
+    The following URLs / views are also implemented for use:
+
+        - [/accounts/register/](http://localhost:8000/accounts/register/)
+
+        - [/accounts/login/](http://localhost:8000/accounts/login/)
+
+        - [/accounts/profile/](http://localhost:8000/accounts/profile/)
+
+        - [/accounts/logout/](http://localhost:8000/accounts/logout/)
+
+
+
 ## Configuration
 
-First, you must add the Django app `accounts` to `INSTALLED_APPS` in your settings file.
+Configuration for django-simple-accounts is set in the `django.settings.DJANGO_SIMPLE_ACCOUNTS` dict. None of the keys are required to be set, however **you must at least define the dict with no keys** (`DJANGO_SIMPLE_ACCOUNTS = {}`).
 
-Configuration for django-simple-accounts is set in the `django.settings.DJANGO_SIMPLE_ACCOUNTS` object. None of the keys are required to be set, however **you must at least define the object with no keys** (`DJANGO_SIMPLE_ACCOUNTS = {}`).
-
-Example configuration object with all keys set:
+Example configuration dict with all keys set:
 
 ```python
 # settings.py
@@ -44,6 +122,12 @@ Dotted python path to a subclass of `django.db.models.Model` that you have defin
 
 
 
+## A note on URLs
+
+As recommended above, it generally makes sense to include `accounts.urls` at `/accounts/. If you are going to place these at a different location, be sure to change the LOGIN_REDIRECT_URL, LOGIN_URL, and LOGOUT_URL described [here](https://docs.djangoproject.com/en/1.7/ref/settings/#login-redirect-url).
+
+
+
 ## Features to be added
 
 [ ] User Profile Model management
@@ -54,4 +138,4 @@ Dotted python path to a subclass of `django.db.models.Model` that you have defin
 
 [ ] Email registration confirmation link
 
-[x] Enable disable settings with django settings
+[x] Configure with django settings

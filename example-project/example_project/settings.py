@@ -1,5 +1,5 @@
 """
-Django settings for simpleproject project.
+Django settings for example_project project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.7/topics/settings/
@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'sq6tcot#^5aqt1-udg(ccvp4clw5x4@d0$z=xinf8-9m1bb9tf'
+SECRET_KEY = 'q)^4$7($#%if8+2zrsh^h5+zi(i)c1ou((mw!1&xy1ei5wu+&^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,7 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
-    'simpleapp',
+    'example_app',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -50,9 +50,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'conf.urls'
+ROOT_URLCONF = 'example_project.urls'
 
-WSGI_APPLICATION = 'conf.wsgi.application'
+WSGI_APPLICATION = 'example_project.wsgi.application'
 
 
 # Database
@@ -84,9 +84,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_URL = "/accounts/login/"
-LOGOUT_URL = "/accounts/logout/"
-
 DJANGO_SIMPLE_ACCOUNTS = {
-    'USER_PROFILE_PYTHON_PATH': 'simpleapp.models.Profile',
+    'USER_PROFILE_PYTHON_PATH': 'my_app.models.UserProfile',
 }
