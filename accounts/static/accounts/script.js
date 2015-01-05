@@ -1,0 +1,1 @@
+// django-simple-accounts JavaScript

@@ -1,0 +1,54 @@
+{% extends "accounts/base.html" %}
+
+{% block content %}
+
+{% for error in form.non_field_errors %}
+  <div class='alert alert-danger'>{{ error }}</div>
+{% endfor %}
+
+<form id='loginForm' method="post" class="form-signin" action="{% url 'accounts:login' %}">
+
+<h2 class="form-signin-heading">Login</h2>
+
+  {% csrf_token %}
+
+  <p>
+    {% for error in form.username.errors %}
+      <div class='alert alert-danger'>{{ error }}</div>
+    {% endfor %}
+    <label for='id_username_email' class="sr-only">Username:</label>
+    {{ form.username_email }}
+  </p>
+
+  <p>
+    {% for error in form.password.errors %}
+      <div class='alert alert-danger'>{{ error }}</div>
+    {% endfor %}
+    <label for='{{ form.password.id }}' class="sr-only">Password:</label>
+    {{ form.password }}
+  </p>
+
+  <input type="hidden" name="next" value="{{ next }}">
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+  <!-- <p>
+    <label/><input type="submit" value="Login">
+  </p> -->
+
+</form>
+
+<!-- <form class="form-signin">
+  <h2 class="form-signin-heading">Please sign in</h2>
+  <label for="inputEmail" class="sr-only">Email address</label>
+  <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+  <label for="inputPassword" class="sr-only">Password</label>
+  <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" value="remember-me"> Remember me
+    </label>
+  </div>
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+</form> -->
+
+{% endblock content %}

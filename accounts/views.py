@@ -2,19 +2,50 @@ from django.shortcuts import get_object_or_404, get_list_or_404, render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.views import login as login_view, logout as logout_view
+# from django.contrib.auth.views import login as login_view, logout as logout_view
+from django.contrib.auth.views import logout as logout_view
 from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.models import User
-from .forms import ProfileForm, RegisterForm
+from .forms import ProfileForm, RegisterForm, LoginForm
 
 
 
-def custom_login(request, **kwargs):
+def custom_login(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect(reverse('accounts:profile'))
+    if request.method == 'POST':
+
+        # create a form instance and populate it with data from the request
+        form = LoginForm(request.POST)
+
+        if form.is_valid():
+
+            # try to get with email first (user may submit username or email)
+            try:
+                user = User.objects.get(email=form.cleaned_data['username_email'])
+            except User.DoesNotExist:
+                pass
+
+            if user is not None:
+                username = user.email
+            else:
+                username = form.cleaned_data['username']
+
+            # login after creation
+            user = authenticate(
+                username = username,
+                password = form.cleaned_data['password'],
+            )
+            login(request, user)
+
+            # redirect
+            return HttpResponseRedirect(reverse('accounts:profile'))
+
     else:
-        return login_view(request, **kwargs)
+        form = LoginForm()
+
+    return render(request, 'accounts/login.html', {'form': form})
 
 
 
@@ -63,8 +94,10 @@ def profile(request):
         'email': user.email,
     }
 
+    # return HttpResponse("this is the user profile page for username '%s'. update first, last, email, username, and password here." % request.user.username)
     if request.method == 'POST':
 
+        # create a form instance and populate it with data from the request
         form = ProfileForm(request.POST)
 
         if form.is_valid():

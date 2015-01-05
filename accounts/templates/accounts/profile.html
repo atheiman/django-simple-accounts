@@ -1,0 +1,69 @@
+{% extends "accounts/base.html" %}
+
+{% block content %}
+
+  <h1 class="text-center">Profile</h1>
+
+  {% for error in form.non_field_errors %}
+      <div class='alert alert-danger'>{{ error }}</div>
+  {% endfor %}
+
+  <form id='profileForm' class="text-center" method="post" action="{% url 'accounts:profile' %}">
+
+    {% csrf_token %}
+
+    <p>
+      <label for='id_username'>Username:</label>
+      {{ form.username }}
+      {% for error in form.username.errors %}
+          <div class='alert alert-danger'>{{ error }}</div>
+      {% endfor %}
+    </p>
+
+    <p>
+      <label for='id_first_name'>First Name:</label>
+      {{ form.first_name }}
+      {% for error in form.first_name.errors %}
+          <div class='alert alert-danger'>{{ error }}</div>
+      {% endfor %}
+    </p>
+
+    <p>
+      <label for='id_last_name'>Last Name:</label>
+      {{ form.last_name }}
+      {% for error in form.last_name.errors %}
+          <div class='alert alert-danger'>{{ error }}</div>
+      {% endfor %}
+    </p>
+
+    <p>
+      <label for='id_email'>Email:</label>
+      {{ form.email }}
+      {% for error in form.email.errors %}
+          <div class='alert alert-danger'>{{ error }}</div>
+      {% endfor %}
+    </p>
+
+    <p>
+      <label for='id_password'>Password:</label>
+      {{ form.password }}
+      {% for error in form.password.errors %}
+          <div class='alert alert-danger'>{{ error }}</div>
+      {% endfor %}
+    </p>
+
+    <p>
+      <label for='id_confirm_password'>Confirm Password:</label>
+      {{ form.confirm_password }}
+      {% for error in form.confirm_password.errors %}
+          <div class='alert alert-danger'>{{ error }}</div>
+      {% endfor %}
+    </p>
+
+    <p>
+      <label/><input type="submit" value="Update Profile">
+    </p>
+
+  </form>
+
+{% endblock content %}

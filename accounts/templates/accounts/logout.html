@@ -1,0 +1,15 @@
+{% extends "accounts/base.html" %}
+
+{% block content %}
+
+    <div class='alert alert-info'>
+        <strong>Successful Logout.</strong> Redirecting you to <a href="{% url 'browse:index' %}">Restaurateur Home</a>.
+    </div>
+
+{% endblock content %}
+
+{% block script %}
+    <script>
+        setTimeout(function(){location.assign("{% url 'browse:index' %}")},2000)
+    </script>
+{% endblock script %}
