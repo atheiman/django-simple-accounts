@@ -10,12 +10,12 @@ Don't get bogged down managing Users, focus on writing your application!
 
 ## Features to be added
 
-- User Profile Model management
+[ ] User Profile Model management
 
-- Login with Google or Facebook
+[ ] Login with Google or Facebook
 
-- Register
+[ ] Register
 
-- Email registration confirmation link
+[ ] Email registration confirmation link
 
-- Enable disable settings with django settings
+[ ] Enable disable settings with django settings
