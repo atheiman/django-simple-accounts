@@ -16,3 +16,6 @@ Don't get bogged down managing Users, focus on writing your application!
 
 - Register
 
+- Email registration confirmation link
+
+- Enable disable settings with django settings
