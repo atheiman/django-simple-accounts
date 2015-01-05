@@ -56,4 +56,4 @@ Dotted python path to a subclass of `django.db.models.Model` that you have defin
 
 [ ] Email registration confirmation link
 
-[ ] Enable disable settings with django settings
+[x] Enable disable settings with django settings
